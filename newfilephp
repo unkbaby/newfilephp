@@ -1,198 +1,377 @@
-<?php 
-$sub_1=95;
-$sub_2=85;
-$sub_3=74;
-$sub_4=64;
-$sub_5=53;
-$total=NULL;
-$average=NULL;
-$percentage=NULL;
-$grade=NULL;
-$total=$sub_1+$sub_2+$sub_3+$sub_4+$sub_5;
-$average=$total/5.0;
-$percentage=($total/500.0)*100;
-if ($average>=60)
- $grade='A';
-else if ($average>=45 && $average<59)
- $grade='B';
-else if($average>=35 && $average<45)
- $grade='C';
-else
- $grade='Fail';
- echo "The Total marks =".$total."/500\n";
- echo "The Average marks=".$average."\n";
- echo "The Percentage =".$percentage."%\n";
- echo "The Grade =".$grade."\n";
- ?>
+1. DHT11 with Arduino.
 
+#include <dht11.h>
 
-2)<!DOCTYPE html>
-<html>
- <body>
+#define DHT11PIN 4
 
- <?php
- echo "Today is :".date("Y/m/d")."<br>";
- date_default_timezone_set("Asia/kolkata"); 
- echo "Current time is : ".date("h:i:s a");
- ?>
- </body>
-</html>
+dht11 DHT11;
 
-3)<!DOCTYPE html>
-<head>
-<?php
- $first_num = $_POST['first_num'];
- $second_num = $_POST['second_num'];
- $operator = $_POST['operator'];
- $result = '';
- if (is_numeric($first_num) && is_numeric($second_num)) 
- {
- switch ($operator) 
- {
- case "Add":
- $result = $first_num + $second_num;
- break;
- case "Subtract":
- $result = $first_num - $second_num;
- break;
- case "Multiply":
- $result = $first_num * $second_num;
- break;
- case "Divide":
- $result = $first_num / $second_num;
- }
- }
-?>
-<body>
- <div id="page-wrap">
- <h1>PHP - Simple Calculator Program</h1>
- <form action="" method="post" id="quiz-form">
- <p>
- <input type="number" name="first_num" id="first_num" required="required" value="<?php echo $first_num; ?>" /> <b>First Number</b>
- </p>
- <p>
- <input type="number" name="second_num" id="second_num" required="required" value="<?php echo $second_num; ?>" /> <b>Second Number</b>
- </p>
- <p>
- <input readonly="readonly" name="result" value="<?php echo $result; ?>"> 
-<b>Result</b>
- </p>
- <input type="submit" name="operator" value="Add" />
- <input type="submit" name="operator" value="Subtract" />
- <input type="submit" name="operator" value="Multiply" />
- <input type="submit" name="operator" value="Divide" />
- </form>
- </div>
-</body>
-</html>
+void setup()
 
-4)<?php
- echo "<h1> REFRESH PAGE </h1>";
- $file='count.txt';
- $c=file_get_contents($file);
- file_put_contents($file,$c+1);
- echo "The number of users visited:".$c;
-?>
+{
 
-5)<html>
- <body>
- <?php
- $states="Karnataka TamilNadu Kerala AndraPradesh";
- $b = explode(' ',$states);
- echo "<br>ORIGINAL ARRAY:<br>";
+Serial.begin(9600);
 
- foreach ($b as $i=>$value){
- echo "states[$i]=$value<br>";
- }
- $d=[];
- foreach ($b as $c)
- {
- $n=strlen($c); 
-
-
- if($c[$n-1]=='s' && $c[$n-2]=='a' && $c[$n-3]=='x') $d[0]=$c;
- if($c[0]=='K' && $c[$n-1]=='s') $d[1]=$c;
- if($c[0]=='T' && $c[$n-2]=='s') $d[2]=$c;
- if($c[0]=='K' && $c[$n-3]=='s') $d[3]=$c;
- if($c[0]=='A' && $c[$n-4]=='s') $d[4]=$c;
- if($c[0]=='T' && $c[$n-3]=='a') $d[]=$c;
- }
- echo "<br>RESULTANT ARRAY :<br>";
- for($i=0;$i<count($d);$i++){
- echo "statesList[$i]=$d[$i]<br>";
- }
- ?>
- ?>
-
- </body>
-</html>
-
-6)<?php 
- $servername = "localhost";
- $username = "root";
- $password = "";
- $dbname = "student";
- $conn = mysqli_connect($servername, $username, $password, $dbname);
- if (!$conn) {
- die("Connection failed: " . mysqli_connect_error());
- }
- $sql = "SELECT * FROM studentinfo";
- $result = $conn->query($sql); 
- $usn = array() ;
- echo "<table border='2'><caption>Before Sorting </caption><br>";
- echo "<tr><th>USN</th><th>NAME</th><th>ADDRESS</th></tr>"; 
- if ($result->num_rows > 0)
- {
- while($row = $result->fetch_assoc())
- { 
- echo "<tr><td>". $row["usn"]."</td>";
- echo "<td>". $row["name"]."</td>";
- echo "<td>". $row["address"]."</td></tr>";
- $usn[] = $row["usn"] ;
- }
- }
- $n = sizeof($usn) ;
- for($i = 0 ; $i < $n-1 ; $i++ )
- {
- $pos = $i ;
- for($j = $i + 1 ; $j < $n ; $j++ )
- {
- if( $usn[$pos] > $usn[$j])
- {
- $pos = $j ;
- }
- }
- if( $pos != $i)
- {
- $temp = $usn[$i] ;
- $usn[$i] = $usn[$pos] ;
- $usn[$pos] = $temp ;
- }
- }
- $name = [] ;
- $address = [] ;
- $result = $conn->query($sql);
- if ($result->num_rows> 0)
- {
- while($row = $result->fetch_assoc()) 
- {
- for($i=0;$i<$n;$i++) 
- {
- if($row["usn"] == $usn[$i]) 
- {
- $name[$i]=$row["name"];
- $address[$i]=$row["address"];
- }
- }
- }
- }
- echo "<br><br>";
- echo "<br><table border='2'><caption>After Sorting</caption><br>";
- echo "<tr><th>USN</th><th>NAME</th><th>Address</th></tr>";
- for($i=0;$i<sizeof($usn);$i++)
- {
- echo "<tr><td>".$usn[$i]."</td>";
- echo "<td>".$name[$i]."</td>";
- echo "<td>".$address[$i]."</td>";
 }
-?>
+
+void loop()
+
+{
+
+Serial.println();
+
+int chk = DHT11.read(DHT11PIN);
+
+Serial.print("Humidity (%): ");
+
+Serial.println((float)DHT11.humidity, 2);
+
+Serial.print("Temperature (C): ");
+
+Serial.println((float)DHT11.temperature, 2);
+
+delay(2000);
+
+} https://projecthub.arduino.cc/arcaegecengiz/using-dht11-12f621
+
+2. Traffic Light using Arduino
+
+int red = 9;
+
+int yellow = 8;
+
+int green = 7;
+
+void setup(){
+
+pinMode(red, OUTPUT);
+
+pinMode(yellow, OUTPUT);
+
+pinMode(green, OUTPUT);
+
+}
+
+void loop(){
+
+digitalWrite(red, HIGH);
+
+delay(15000);
+
+digitalWrite(red, LOW);
+
+digitalWrite(yellow, HIGH);
+
+delay(1000);
+
+digitalWrite(yellow, LOW);
+
+delay(500);
+
+digitalWrite(yellow, HIGH);
+
+delay(1000);
+
+digitalWrite(yellow, LOW);
+
+delay(500);
+
+digitalWrite(yellow, HIGH);
+
+delay(1000);
+
+digitalWrite(yellow, LOW);
+
+delay(500);
+
+digitalWrite(yellow, HIGH);
+
+delay(1000);
+
+digitalWrite(yellow, LOW);
+
+delay(500);
+
+digitalWrite(yellow, HIGH);
+
+delay(1000);
+
+digitalWrite(yellow, LOW);
+
+delay(500);
+
+digitalWrite(green, HIGH);
+
+delay(20000);
+
+digitalWrite(green, LOW);
+
+//
+
+digitalWrite(yellow, HIGH);
+
+delay(1000);
+
+digitalWrite(yellow, LOW);
+
+delay(500);
+
+digitalWrite(yellow, HIGH);
+
+delay(1000);
+
+digitalWrite(yellow, LOW);
+
+delay(500);
+
+digitalWrite(yellow, HIGH);
+
+delay(1000);
+
+digitalWrite(yellow, LOW);
+
+delay(500);
+
+digitalWrite(yellow, HIGH);
+
+delay(1000);
+
+digitalWrite(yellow, LOW);
+
+delay(500);
+
+digitalWrite(yellow, HIGH);
+
+delay(1000);
+
+digitalWrite(yellow, LOW);
+
+delay(500);
+
+}
+
+https://projecthub.arduino.cc/agarwalkrishna3009/traffic-light-using-arduino-a-beginner-project-35f8c6
+
+3. CONTROLLED LEDS USING ARDUINO AND Push Button
+
+void setup() {
+
+pinMode(12,OUTPUT);
+
+pinMode(2,INPUT);
+
+}
+
+void loop() {
+
+if(digitalRead(2) == HIGH){
+
+digitalWrite(12,HIGH);
+
+}
+
+else{
+
+digitalWrite(12,LOW);
+
+}
+
+}
+
+https://www.youtube.com/watch?v=yBgMJssXqHY&t=1121s
+
+4. ARDUINO BASED MOTION DETECTION USING PIR SENSOR
+
+const int pirPin = 5; // Digital pin connected to the PIR sensor
+
+void setup() {
+
+pinMode(pirPin, INPUT);
+
+pinMode(7, OUTPUT); // Set PIR sensor pin as input
+
+Serial.begin(9600); // Initialize serial communication for debugging (optional)
+
+delay(5000);
+
+}
+
+void loop() {
+
+int pirState = digitalRead(pirPin); // Read PIR sensor state (HIGH or LOW)
+
+if (pirState == HIGH) {
+
+Serial.println("Motion detected!");
+
+delay(5000); // Delay for 1 second (adjust as needed)
+
+// Motion detected
+
+digitalWrite(7, HIGH);
+
+delay(500);
+
+} else {
+
+// No motion
+
+Serial.println("No motion detected.");
+
+delay(5000);
+
+digitalWrite(7,LOW);
+
+delay(500);
+
+}
+
+}
+
+https://circuitdigest.com/microcontroller-projects/interface-pir-sensor-with-arduino
+5)contolling multiple led 
+//For more Projects: www.arduinocircuit.com
+int ledPin[4] = {8, 9, 10, 11};
+const int buttonPin = 13;
+int buttonState = HIGH;
+int pushCounter = 0;
+int numberOfLED = 4;
+void setup() {
+  pinMode(buttonPin, INPUT);
+  for (int i = 0; i <= 4; i++) {
+    pinMode(ledPin[i], OUTPUT);
+  }
+}
+void loop() {
+  buttonState = digitalRead(buttonPin);
+  if (buttonState == LOW) {
+    for (int i = 0; i < numberOfLED; i++) {
+      if (pushCounter % numberOfLED == i) {
+        digitalWrite(ledPin[i], HIGH);
+      }
+      else {
+        digitalWrite(ledPin[i], LOW);
+      }
+    }
+    pushCounter++;
+    delay(400);
+  }
+}
+
+6. ARDUINO AND MQ-135 Air Quality Monitoring
+
+void setup() {
+
+pinMode (A0, INPUT);
+
+Serial.begin(9600);
+
+}
+
+void loop() {
+
+int my_value=analogRead(A0);
+
+delay(1000);
+
+Serial.println(my_value);
+
+}
+
+https://electronicsprojectshub.com/interfacing-mq-135-gas-sensor-with-arduino/
+
+7. Touch detection using Arduino
+
+#define ctsPin 2
+
+// Pin for capactitive touch sensor
+
+int ledPin = 13;
+
+// pin for the LED
+
+void setup()
+
+{
+
+Serial.begin(9600);
+
+pinMode(ledPin, OUTPUT);
+
+pinMode(ctsPin, INPUT);
+
+}
+
+void loop()
+
+{
+
+int ctsValue = digitalRead(ctsPin);
+
+if (ctsValue == HIGH)
+
+{
+
+digitalWrite(ledPin, HIGH);
+
+Serial.println("TOUCHED");
+
+}
+
+else{
+
+digitalWrite(ledPin,LOW);
+
+Serial.println("not touched");
+
+}
+
+delay(500);
+
+}
+
+8. Ultrasonic Sonic sensor
+
+int trig=10;
+
+int echo=9;
+
+long timeInMicro;
+
+long distanceInCm;
+
+void setup()
+
+{
+
+Serial.begin(9600);
+
+pinMode(10,OUTPUT);
+
+pinMode(9,INPUT);
+
+}
+
+void loop()
+
+{
+
+digitalWrite(trig,LOW);
+
+delayMicroseconds(2);
+
+digitalWrite(trig,HIGH);
+
+delayMicroseconds(10);
+
+digitalWrite(trig,LOW);
+
+timeInMicro= pulseIn(echo,HIGH);
+
+distanceInCm = ((timeInMicro/29)/2);
+
+Serial.println(distanceInCm);
+
+delay(1000);
+
+}
