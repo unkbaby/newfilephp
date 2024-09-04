@@ -1,0 +1,163 @@
+BIT STUFFING:
+#include <stdio.h>
+#include <string.h>
+#define MAX 1000
+int main()
+{
+int si = 0, di = 0, count = 0; 
+char str[MAX], dest[MAX];
+char flag[MAX] = "01111110";
+printf("Enter the user data in 1's & 0's :");
+scanf("%s", str);
+di=strlen(flag); 
+strcpy(dest,flag); 
+while(str[si] != '\0')
+{
+if(str[si] == '1')
+count++;
+else
+count = 0; 
+dest[di++] = str[si++];
+if(count == 5)
+{
+count = 0; 
+dest[di++] = '0'; 
+}
+} 
+dest[di] = '\0'; 
+strcat(dest, flag); 
+printf("Stuffed message is :%s", dest);
+}
+BIT DESFTFFING:
+#include<stdio.h>
+#include<stdlib.h>
+#define MAXSIZE 100
+int main()
+{
+char *p,*q;
+char temp;
+char in[MAXSIZE];
+char destuff[MAXSIZE];
+int count=0;
+printf("enter the input character string to 
+destuff(0‘s & 1‘s only):\n");
+scanf("%s",in);
+p=in;
+q=destuff;
+while(*p!='\0')
+{
+if(*p=='0')
+{
+*q=*p;
+q++;
+p++;
+}
+else
+{
+while(*p=='1' && count!=5)
+{
+count++;
+*q=*p;
+q++;
+p++;
+}
+if(count==5)
+{
+p++;
+}
+count=0;
+}
+}
+*q='\0';
+printf("\nthe destuffed character string is");
+printf("\n%s\n",destuff);
+return 0;
+}
+CHARACTER STUFFING:
+#include <stdio.h>
+#include <string.h>
+#define MAX 1000
+int main()
+{
+int si = 0, di = 0; 
+char src[MAX], dest[MAX];
+char flag1[] = "FLAG";
+printf("Enter the STRING data : ");
+scanf("%s", src);
+di=strlen(flag1); 
+strcpy(dest,flag1); 
+while(src[si] != '\0')
+{
+if(src[si] == 'E' &&src[si+1] == 'S' &&src[si+2] == 
+'C')
+{
+dest[di] = 'E', dest[di+1] = 'S', dest[di+2] = 'C', 
+dest[di+3] = 'E', dest[di+4] = 'S',dest[di+5]=’C’;
+di +=6;
+si+=3;
+}
+else if(src[si] == 'F' &&src[si+1] == 'L' &&src[si+2] 
+== 'A'&&src[si+3] == 'G')
+{
+dest[di] = 'E', dest[di+1] = 'S', dest[di+2] = 'C', 
+dest[di+3] = 'F', dest[di+4] = 'L', dest[di+5] = 'A', 
+dest[di+6] = 'G';
+di +=7;
+si+=4; 
+}
+else
+dest[di++] = src[si++];
+}
+dest[di] = '\0'; 
+strcat(dest, flag1); 
+printf("Stuffed message is : %s", dest);
+}
+CRCIT:
+#include <stdio.h>
+#include <conio.h>
+#include <string.h>
+void main() {
+int i,j,keylen,msglen;
+charinput[100],key[30],temp[30],quot[100],rem[3
+0],key1[30];
+printf("Enter Data: ");
+gets(input);
+printf("Enter Key: ");
+gets(key);
+keylen=strlen(key);
+msglen=strlen(input);
+strcpy(key1,key);
+for (i=0;i<keylen-1;i++) {
+input[msglen+i]='0';
+}
+for (i=0;i<keylen;i++)
+temp[i]=input[i];
+for (i=0;i<msglen;i++) {
+quot[i]=temp[0];
+if(quot[i]=='0')
+for (j=0;j<keylen;j++)
+key[j]='0'; else
+for (j=0;j<keylen;j++)
+key[j]=key1[j];
+for (j=keylen-1;j>0;j--) {
+if(temp[j]==key[j])
+rem[j-1]='0'; else
+rem[j-1]='1';
+}
+rem[keylen-1]=input[i+keylen];
+strcpy(temp,rem);
+}
+strcpy(rem,temp);
+printf("\nQuotient is ");
+for (i=0;i<msglen;i++)
+printf("%c",quot[i]);
+printf("\nRemainder is ");
+for (i=0;i<keylen-1;i++)
+printf("%c",rem[i]);
+printf("\nFinal data is: ");
+for (i=0;i<msglen;i++)
+printf("%c",input[i]);
+for (i=0;i<keylen-1;i++)
+printf("%c",rem[i]);
+getch();
+}
